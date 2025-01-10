@@ -125,3 +125,91 @@ This endpoint allows existing users to log in by providing their email and passw
     "code": 401
 }
 ```
+
+## GET /user/profile ENDPOINT
+
+Get the profile of the authenticated user.
+
+### Description
+This endpoint allows authenticated users to retrieve their profile information.
+
+### HTTP Method
+`GET`
+
+### Endpoint
+`/user/profile`
+
+### Headers
+- `Authorization`: Bearer token
+
+### Response Status Codes
+
+| Status Code | Description |
+|------------|-------------|
+| 200 | Returns the user profile |
+| 401 | Unauthorized - If the user is not authenticated |
+
+### Success Response Example
+```json
+{
+    "status": "success",
+    "message": "User profile retrieved successfully",
+    "data": {
+        "userId": "uuid",
+        "fullname": {
+            "firstname": "John",
+            "lastname": "Doe"
+        },
+        "email": "john@example.com"
+    }
+}
+```
+
+### Error Response Example
+```json
+{
+    "status": "error",
+    "message": "Unauthorized",
+    "code": 401
+}
+```
+
+## GET /user/logout ENDPOINT
+
+Logout the authenticated user.
+
+### Description
+This endpoint allows authenticated users to log out.
+
+### HTTP Method
+`GET`
+
+### Endpoint
+`/user/logout`
+
+### Headers
+- `Authorization`: Bearer token
+
+### Response Status Codes
+
+| Status Code | Description |
+|------------|-------------|
+| 200 | Successfully logged out |
+| 401 | Unauthorized - If the user is not authenticated |
+
+### Success Response Example
+```json
+{
+    "status": "success",
+    "message": "User logged out successfully"
+}
+```
+
+### Error Response Example
+```json
+{
+    "status": "error",
+    "message": "Unauthorized",
+    "code": 401
+}
+```
