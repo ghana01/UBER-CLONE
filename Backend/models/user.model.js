@@ -33,8 +33,8 @@ const userSchema=new mongoose.Schema({
 },{timestamps:true});
 
 userSchema.methods.generateAuthToken=async function(){
-    const JWT_SECRET="uber-clone-secrate!@#";
-    const token =jwt.sign({_id:this._id},JWT_SECRET);
+   // const JWT_SECRET="uber-clone-secrate!@#";
+    const token =jwt.sign({_id:this._id},"uber-clone-secrate!@#");
     return token;
 }
 userSchema.methods.comparePassword=async function(password){
