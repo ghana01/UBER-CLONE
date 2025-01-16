@@ -213,3 +213,194 @@ This endpoint allows authenticated users to log out.
     "code": 401
 }
 ```
+# Captain Routes
+
+## Register Captain
+
+**Endpoint:** `/register`
+
+**Method:** `POST`
+
+**Description:** Registers a new captain.
+
+**Request Body:**
+```json
+{
+  "fullname": {
+    "firstname": "string", // Required, minimum 3 characters
+    "lastname": "string" // Optional, minimum 3 characters if provided
+  },
+  "email": "string", // Required, must be a valid email
+  "password": "string", // Required, minimum 6 characters
+  "vehicle": {
+    "color": "string", // Required, minimum 3 characters
+    "plate": "string", // Required, minimum 3 characters
+    "capacity": "number", // Required, minimum 1
+    "vehicleType": "string" // Required, must be one of `car`, `motorcycle`, `auto`
+  }
+}
+```
+
+**Responses:**
+
+- `201 Created`: Returns the created captain and a JWT token.
+```json
+{
+  "token": "string", // JWT token
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "password": "string", // Hashed password
+    "status": "string", // e.g., "inactive"
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string", // Captain ID
+    "__v": 0
+  }
+}
+```
+
+- `400 Bad Request`: If validation fails or captain already exists.
+```json
+{
+  "status": "error",
+  "message": "string" // Error message
+}
+```
+
+## Login Captain
+
+**Endpoint:** `/login`
+
+**Method:** `POST`
+
+**Description:** Authenticates a captain and returns a token.
+
+**Request Body:**
+```json
+{
+  "email": "string", // Required, must be a valid email
+  "password": "string" // Required, minimum 6 characters
+}
+```
+
+**Responses:**
+
+- `200 OK`: Returns the authenticated captain and a JWT token.
+```json
+{
+  "token": "string", // JWT token
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "status": "string", // e.g., "active"
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string", // Captain ID
+    "__v": 0
+  }
+}
+```
+
+- `400 Bad Request`: If validation fails.
+```json
+{
+  "status": "error",
+  "message": "string" // Error message
+}
+```
+
+- `401 Unauthorized`: If email or password is incorrect.
+```json
+{
+  "status": "error",
+  "message": "Invalid email or password"
+}
+```
+
+## Get Captain Profile
+
+**Endpoint:** `/profile`
+
+**Method:** `GET`
+
+**Description:** Retrieves the profile of the authenticated captain.
+
+**Headers:**
+- `Authorization`: Bearer token
+
+**Responses:**
+
+- `200 OK`: Returns the captain's profile.
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "status": "string", // e.g., "active"
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string", // Captain ID
+    "__v": 0
+  }
+}
+```
+
+- `401 Unauthorized`: If the captain is not authenticated.
+```json
+{
+  "status": "error",
+  "message": "Unauthorized"
+}
+```
+
+## Logout Captain
+
+**Endpoint:** `/logout`
+
+**Method:** `GET`
+
+**Description:** Logs out the authenticated captain.
+
+**Headers:**
+- `Authorization`: Bearer token
+
+**Responses:**
+
+- `200 OK`: Successfully logged out.
+```json
+{
+  "status": "success",
+  "message": "User logged out successfully"
+}
+```
+
+- `401 Unauthorized`: If the captain is not authenticated.
+```json
+{
+  "status": "error",
+  "message": "Unauthorized"
+}
+```
+
